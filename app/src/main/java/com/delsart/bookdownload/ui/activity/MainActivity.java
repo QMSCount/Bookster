@@ -1,6 +1,5 @@
 package com.delsart.bookdownload.ui.activity;
 
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,10 +28,6 @@ import com.delsart.bookdownload.R;
 import com.delsart.bookdownload.adapter.PagerAdapter;
 import com.delsart.bookdownload.ui.fragment.AiXiaFragment;
 import com.delsart.bookdownload.ui.fragment.BaseFragment;
-import com.delsart.bookdownload.ui.fragment.BlahFragment;
-import com.delsart.bookdownload.ui.fragment.DongManZhiJiaFragment;
-import com.delsart.bookdownload.ui.fragment.M360DFragment;
-import com.delsart.bookdownload.ui.fragment.QiShuFragment;
 import com.delsart.bookdownload.ui.fragment.ShuYuZheFragment;
 import com.delsart.bookdownload.ui.fragment.XiaoShuWuFragment;
 import com.delsart.bookdownload.ui.fragment.ZhiXuanFragment;
@@ -59,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences autoupdate;
     String lastKeyWords = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("dark_theme", false))
@@ -73,12 +67,13 @@ public class MainActivity extends AppCompatActivity {
         StatusBarUtils.MIUISetStatusBarLightMode(this, true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // 初始化各源界面
         initView();
+        // 提示信息
         showInfoDialog();
 
-
+        // 自动更新检测
         if (autoupdate.getBoolean("autoUpdate", true)) {
-
 //            try {
 //                getUpdate();
 //            } catch (Exception e) {
@@ -129,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     if (AlipayZeroSdk.hasInstalledAlipayClient(MyApplication.getContext()))
-                        AlipayZeroSdk.startAlipayClient(MainActivity.this, "a6x02835mi3wh18ivz0mbdb");
+                        AlipayZeroSdk.startAlipayClient(MainActivity.this, "fkx077990wbathuutf4of5a");
                     else
                         Toast.makeText(getApplicationContext(), "没有安装支付宝", Toast.LENGTH_SHORT).show();
 
@@ -249,11 +244,7 @@ public class MainActivity extends AppCompatActivity {
         addpage(new ZhiXuanFragment(), "知轩藏书");
         addpage(new ZhouDuFragment(), "周读");
         addpage(new ShuYuZheFragment(), "书语者");
-        addpage(new DongManZhiJiaFragment(), "动漫之家");
-        addpage(new M360DFragment(), "360℃");
         addpage(new XiaoShuWuFragment(), "我的小书屋");
-        addpage(new QiShuFragment(), "奇书");
-        addpage(new BlahFragment(), "blah");
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

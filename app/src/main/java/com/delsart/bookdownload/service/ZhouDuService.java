@@ -60,8 +60,9 @@ public class ZhouDuService extends BaseService {
                     Message msg = mHandler.obtainMessage();
                     msg.what = MsgType.ERROR;
                     mHandler.sendMessage(msg);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                    //
                 }
             }
         }).start();
@@ -93,17 +94,14 @@ public class ZhouDuService extends BaseService {
                     String pic = document.select("body > div > div > div.hanghang-za > div.hanghang-shu-content > div.hanghang-shu-content-img > img").attr("abs:src");
                     NovelBean no = new NovelBean(name, time, info, category, status, author, words, pic, url);
                     list.add(no);
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-
-
+                catch (Exception e) {
+                    //
+                }
                 latch.countDown();
-
             }
         });
     }
-
 
     @Override
     public ArrayList<DownloadBean> getDownloadurls(final String url) throws InterruptedException {
@@ -119,5 +117,4 @@ public class ZhouDuService extends BaseService {
         latch.await();
         return urls;
     }
-
 }

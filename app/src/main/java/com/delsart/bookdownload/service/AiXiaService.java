@@ -44,7 +44,8 @@ public class AiXiaService extends BaseService {
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)
                             .get()
-                            .select("body > div.list > li > a");
+                            .select("body > section> ul > li > div > a");
+
                     latch = new CountDownLatch(select.size());
                     for (Element element : select) {
                         runInSameTime(element);
@@ -55,13 +56,8 @@ public class AiXiaService extends BaseService {
                     msg.what = MsgType.SUCCESS;
                     msg.obj = list;
                     mHandler.sendMessage(msg);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Message msg = mHandler.obtainMessage();
-                    msg.what = MsgType.ERROR;
-                    mHandler.sendMessage(msg);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    //
                 }
             }
         }).start();
@@ -78,24 +74,23 @@ public class AiXiaService extends BaseService {
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)
                             .get();
-                    String name = document.select("body > div:nth-child(2) > h1").text();
-                    String time = document.select("body > div:nth-child(3) > li:nth-child(6)").text();
-                    String info = document.select("body > div.intro > li").text();
-                    String category = document.select("body > div:nth-child(3) > li:nth-child(2)").text();
-                    String status = document.select("body > div:nth-child(3) > li:nth-child(5)").text();
-                    String author = document.select("body > div:nth-child(3) > li:nth-child(1)").text();
-                    String words = document.select("body > div:nth-child(3) > li:nth-child(3)").text();
-                    String pic = "";
+                    String name =document.select("body > section:nth-child(3) > ul > li > div:nth-child(2) > h4").text();
+                    String time = "最后更新：" + document.select("body > section:nth-child(3) > ul > li > div:nth-child(2) > p:nth-child(3)").text();
+                    String info = document.select("body > section:nth-child(5) > p").text();
+                    String category = "类型：" + document.select("body > div > div > a:nth-child(2)").text();
+                    String status = "";
+                    String author = "作者：" +  document.select("body > section:nth-child(3) > ul > li > div:nth-child(2) > p:nth-child(2)> a").text();
+                    String words = document.select("body > section:nth-child(3) > ul > li > div:nth-child(2) > p:nth-child(4)").text();
+                    String pic = document.select("body > section:nth-child(3) > ul > li > div.ix-list-img-square > img").attr("abs:src");
                     NovelBean no = new NovelBean(name, time, info, category, status, author, words, pic, url);
                     list.add(no);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    //
                 }
                 latch.countDown();
             }
         });
     }
-
 
     @Override
     public ArrayList<DownloadBean> getDownloadurls(final String url) throws InterruptedException {
@@ -111,15 +106,15 @@ public class AiXiaService extends BaseService {
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)
                             .get()
-                            .select("body > div:nth-child(5)");
+                            .select("body > section:nth-child(6)");
                     String u1 = elements.select("li:nth-child(2) > a").attr("abs:href");
                     String u1n = elements.select("li:nth-child(2) > a").text();
                     String u2 = elements.select("li:nth-child(3) > a").attr("abs:href");
                     String u2n = elements.select("li:nth-child(3) > a").text();
                     urls.add(new DownloadBean(u1n, u1));
                     urls.add(new DownloadBean(u2n, u2));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    //
                 }
                 latch.countDown();
             }

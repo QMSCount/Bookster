@@ -19,9 +19,8 @@ public abstract class BaseService {
         String result = null;
         try {
             result = new String(str.getBytes("UTF-8"), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (Exception e) {
+            //
         }
         return result;
     }

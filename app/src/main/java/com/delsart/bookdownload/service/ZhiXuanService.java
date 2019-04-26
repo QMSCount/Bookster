@@ -61,13 +61,9 @@ String lasts="";
                     msg.what = MsgType.SUCCESS;
                     msg.obj = list;
                     mHandler.sendMessage(msg);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Message msg = mHandler.obtainMessage();
-                    msg.what = MsgType.ERROR;
-                    mHandler.sendMessage(msg);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                    //
                 }
             }
         }).start();
@@ -107,14 +103,14 @@ String lasts="";
                     String durl=document.select("#m > div.postcont > div.pagefujian > div.filecont > p.filetit > a").attr("abs:href");
                     NovelBean no = new NovelBean(name, time, info, category, status, author, words, pic, durl);
                     list.add(no);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                    //
                 }
                 latch.countDown();
             }
         });
     }
-
 
     @Override
     public ArrayList<DownloadBean> getDownloadurls(final String url) throws InterruptedException {
@@ -135,8 +131,9 @@ String lasts="";
                     for (Element element : elements) {
                         urls.add(new DownloadBean(element.text(), element.attr("abs:href")));
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                    //
                 }
                 latch.countDown();
             }

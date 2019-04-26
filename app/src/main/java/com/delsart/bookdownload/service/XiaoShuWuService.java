@@ -58,13 +58,9 @@ public class XiaoShuWuService extends BaseService {
                     msg.what = MsgType.SUCCESS;
                     msg.obj = list;
                     mHandler.sendMessage(msg);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Message msg = mHandler.obtainMessage();
-                    msg.what = MsgType.ERROR;
-                    mHandler.sendMessage(msg);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                    //
                 }
             }
         }).start();
@@ -118,14 +114,14 @@ public class XiaoShuWuService extends BaseService {
                     String durl = document.select("#container > div > div.post_content > div > p.downlink > strong > a").attr("abs:href");
                     NovelBean no = new NovelBean(name, time, info, category, status, author, words, pic, durl);
                     list.add(no);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                    //
                 }
                 latch.countDown();
             }
         });
     }
-
 
     @Override
     public ArrayList<DownloadBean> getDownloadurls(final String url) throws InterruptedException {
@@ -150,8 +146,9 @@ public class XiaoShuWuService extends BaseService {
                     for (Element element : elements) {
                         urls.add(new DownloadBean(element.text(), element.attr("abs:href")));
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                    //
                 }
                 latch.countDown();
             }

@@ -44,25 +44,22 @@ public class ShuYuZheService extends BaseService {
             public void run() {
                 try {
                     list.clear();
-                    Log.d(TAG, "run: "+mBaseUrl + "/"+mPage);
-                    Elements select = Jsoup.connect(mBaseUrl + "/"+mPage)
-                            .timeout(10000)
+                    //Log.d(TAG, "run: " + mBaseUrl + "/" + mPage);
+                    Elements select = Jsoup.connect(mBaseUrl + "/" + mPage)
+                            .timeout(5000)
                             .ignoreContentType(true)
                             .ignoreHttpErrors(true)
                             .userAgent(Url.PC_AGENT)
                             .get()
-                            .select("body > div.container > div > div > div.panel.panel-success > div.panel-body > table > tbody > tr");
-                        latch = new CountDownLatch(select.size() - 1);
-                        for (int i = 1; i < select.size(); i++) {
-                            runInSameTime(select.get(i));
-                        }
+                            .select("body > main > div.row > div.col-md-9 > div > table > tbody > tr");
+                    latch = new CountDownLatch(select.size() - 1);
+                    for (int i = 1; i < select.size(); i++) {
+                        runInSameTime(select.get(i));
+                    }
 
-                        Log.d(TAG, "run: "+select.size());
-                        latch.await();
-                        mPage++;
-
-
-
+                    Log.d(TAG, "run: " + select.size());
+                    latch.await();
+                    mPage++;
 
                     Message msg = mHandler.obtainMessage();
                     msg.what = MsgType.SUCCESS;
@@ -74,8 +71,9 @@ public class ShuYuZheService extends BaseService {
                     Message msg = mHandler.obtainMessage();
                     msg.what = MsgType.ERROR;
                     mHandler.sendMessage(msg);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                    //
                 }
             }
         }).start();
@@ -87,37 +85,29 @@ public class ShuYuZheService extends BaseService {
             public void run() {
                 try {
                     Document document = Jsoup.connect(element.select("td:nth-child(1) > a").attr("abs:href"))
+                            .timeout(5000)
                             .ignoreContentType(true)
                             .userAgent(Url.PC_AGENT)
                             .get();
-                    Elements elements = document.select("ul.list-group");
-                    String name = elements.select("li").get(2).text().replace("文件名称：Book.ShuYuZhe.com书语者_","");
-                    String status =  elements.select("li").get(4).text();
-
-                    String time =  elements.select("li").get(6).text();
-
-                    String info = "";
-
-                    String category = elements.select("li").get(5).text();
-
-
-
-                    String author = "";
-
-                    String words =  elements.select("li").get(3).text();
-
-
-                    String url = document.select("a:contains(下载此书)").attr("href");
-                    String pic = "";
+                    Elements elements = document.select("body > main > div.row > div > div > div > div.col-md-8 > ul");
+                    String name = elements.select("li").get(1).text();
+                    String status = elements.select("li").get(5).text();
+                    String time = elements.select("li").get(4).text();
+                    String info = elements.select("li").get(6).text();
+                    String category = elements.select("li").get(3).text();
+                    String author = elements.select("li").get(2).text();
+                    String words = elements.select("li").get(7).text();
+                    String url = elements.select("li").get(8).select("a:nth-child(2)").attr("href");
+                    String pic = document.select("body > main > div.row > div > div > div > div.col-md-2 > img").attr("abs:src");
                     list.add(new NovelBean(name, time, info, category, status, author, words, pic, url));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                }
+                catch (Exception e) {
+                    //
                 }
                 latch.countDown();
             }
         });
     }
-
 
     @Override
     public ArrayList<DownloadBean> getDownloadurls(final String url) throws InterruptedException {
@@ -126,7 +116,22 @@ public class ShuYuZheService extends BaseService {
         mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
-                urls.add(new DownloadBean("全文下载", url));
+                try {
+                    Elements elements = Jsoup.connect(url)
+                            .timeout(10000)
+                            .ignoreContentType(true)
+                            .ignoreHttpErrors(true)
+                            .userAgent(Url.MOBBILE_AGENT)
+                            .get()
+                            .select("body");
+                    String u1 = elements.select("a").attr("abs:href");
+                    String u1n = elements.select("h3").text().replace("欢迎使用","");
+                    urls.add(new DownloadBean(u1n, u1));
+                }
+                catch (Exception e) {
+                    //
+                }
+
                 latch.countDown();
             }
         });

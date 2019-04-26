@@ -7,13 +7,7 @@ public interface Url {
 
     String ZHIXUAN = "http://www.zxcs8.com/?keyword=";
     String ZHOUDU = "http://www.ireadweek.com/index.php/Index/bookList.html?keyword=";
-    String M360D = "http://www.360dxs.com/list.html?keyword=";
-    String SHUYUZHE = "https://book.shuyuzhe.com/search/";
+    String SHUYUZHE = "https://book.shuyuzhe.com/search/index/";
     String XIAOSHUWU = "http://mebook.cc/page/0?s=";
-    String QISHU = "http://zhannei.baidu.com/cse/search?s=2672242722776283010&nsid=&q=";
-    String AIXIA = "http://m.ixdzs.com/search?k=";
-    String BLAH = "http://blah.me/search?q=";
-    String DONGMANZHIJIA="http://s.acg.dmzj.com/lnovelsum/search.php?s=";
+    String AIXIA = "https://m.ixdzs.com/search?k=";
 }
-
-

@@ -36,6 +36,7 @@ import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
 /**
  * Created by Delsart on 2017/7/24.
+ * Modify by 狂飙的犀牛 on 2019/04/26
  */
 
 public class AboutActivity extends MaterialAboutActivity {
@@ -59,7 +60,6 @@ public class AboutActivity extends MaterialAboutActivity {
         super.onCreate(savedInstanceState);
     }
 
-
     @NonNull
     @Override
     protected MaterialAboutList getMaterialAboutList(@NonNull final Context c) {
@@ -68,12 +68,11 @@ public class AboutActivity extends MaterialAboutActivity {
         // Add items to card
         appCardBuilder.addItem(new MaterialAboutTitleItem.Builder()
                 .text(R.string.app_name)
-                .desc("© 2017 Delsart")
+                .desc("© 2019 狂飙的犀牛")
                 .icon(R.mipmap.ic_launcher)
                 .build());
 
         try {
-
             appCardBuilder.addItem(ConvenienceBuilder.createVersionActionItem(c,
                     new IconicsDrawable(c)
                             .icon(CommunityMaterial.Icon.cmd_information_outline)
@@ -92,9 +91,8 @@ public class AboutActivity extends MaterialAboutActivity {
                         .icon(CommunityMaterial.Icon.cmd_history)
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18))
-                .setOnClickAction(ConvenienceBuilder.createWebViewDialogOnClickAction(c, "", "https://github.com/Delsart/Bookster/blob/master/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97.txt", true, false))
+                .setOnClickAction(ConvenienceBuilder.createWebViewDialogOnClickAction(c, "", "https://github.com/tobeforever/Bookster/blob/master/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97.txt", true, false))
                 .build());
-
 
         MaterialAboutCard.Builder authorCardBuilder = new MaterialAboutCard.Builder();
         authorCardBuilder.title("作者相关");
@@ -111,6 +109,16 @@ public class AboutActivity extends MaterialAboutActivity {
                         ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("https://www.coolapk.com/u/473036")))
                 .build());
 
+        authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+                .text("狂飙的犀牛")
+                .subText("维护者 , 中国")
+                .icon(new IconicsDrawable(c)
+                        .icon(CommunityMaterial.Icon.cmd_account)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18))
+                .setOnClickAction(
+                        ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("http://www.coolapk.com/u/1033370")))
+                .build());
 
         authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
                 .text("Archie")
@@ -154,20 +162,11 @@ public class AboutActivity extends MaterialAboutActivity {
                         .icon(CommunityMaterial.Icon.cmd_github_circle)
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18))
-                .setOnClickAction(ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("https://github.com/Delsart/Bookster")))
+                .setOnClickAction(ConvenienceBuilder.createWebsiteOnClickAction(c, Uri.parse("https://github.com/tobeforever/Bookster")))
                 .build());
-
 
         MaterialAboutCard.Builder convenienceCardBuilder = new MaterialAboutCard.Builder();
         convenienceCardBuilder.title("更多");
-        convenienceCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
-                new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_earth)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18),
-                "访问我们的主页",
-                true,
-                Uri.parse("https://hereacg.org")));
 
         convenienceCardBuilder.addItem(ConvenienceBuilder.createRateActionItem(c,
                 new IconicsDrawable(c)
@@ -185,28 +184,11 @@ public class AboutActivity extends MaterialAboutActivity {
                         .sizeDp(18),
                 "发送邮件",
                 true,
-                "2289582155@qq.com",
+                "2643363070@qq.com",
                 "Question concerning MaterialAboutLibrary"));
 
         convenienceCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("捐赠，请作者女装(误)喝杯果汁（支付宝）")
-                .icon(new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_coffee)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18))
-                .setOnClickAction(new MaterialAboutItemOnClickAction() {
-                    @Override
-                    public void onClick() {
-                        if (AlipayZeroSdk.hasInstalledAlipayClient(MyApplication.getContext()))
-                            AlipayZeroSdk.startAlipayClient(activity, "a6x02835mi3wh18ivz0mbdb");
-                        else
-                            Toast.makeText(getApplicationContext(), "没有安装支付宝", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .build());
-
-        convenienceCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("捐赠，请作者女装(误)喝杯果汁(微信）")
+                .text("捐赠，请作者 @Delsart 喝杯果汁（微信）")
                 .icon(new IconicsDrawable(c)
                         .icon(CommunityMaterial.Icon.cmd_coffee)
                         .color(ContextCompat.getColor(c, colorIcon))
@@ -220,6 +202,23 @@ public class AboutActivity extends MaterialAboutActivity {
                 })
                 .build());
 
+        convenienceCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+                .text("捐赠，请维护者 @狂飙的犀牛 喝瓶快乐水（支付宝）")
+                .icon(new IconicsDrawable(c)
+                        .icon(CommunityMaterial.Icon.cmd_coffee)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18))
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
+                    @Override
+                    public void onClick() {
+                        if (AlipayZeroSdk.hasInstalledAlipayClient(MyApplication.getContext()))
+                            AlipayZeroSdk.startAlipayClient(activity, "fkx077990wbathuutf4of5a");
+                        else
+                            Toast.makeText(getApplicationContext(), "没有安装支付宝", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build());
+
         MaterialAboutCard.Builder otherCardBuilder = new MaterialAboutCard.Builder();
         otherCardBuilder.title("来源");
         otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
@@ -229,7 +228,7 @@ public class AboutActivity extends MaterialAboutActivity {
                         .sizeDp(18),
                 "爱下小说",
                 true,
-                Uri.parse("http://m.ixdzs.com")));
+                Uri.parse("https://m.ixdzs.com")));
 
         otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
                 new IconicsDrawable(c)
@@ -263,45 +262,12 @@ public class AboutActivity extends MaterialAboutActivity {
                         .icon(CommunityMaterial.Icon.cmd_earth)
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18),
-                "动漫之家",
-                true,
-                Uri.parse("https://www.dmzj.com/")));
-
-        otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
-                new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_earth)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18),
-                "360℃",
-                true,
-                Uri.parse("http://www.360dxs.com")));
-        otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
-                new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_earth)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18),
                 "我的小书屋",
                 true,
                 Uri.parse("http://mebook.cc")));
-        otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
-                new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_earth)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18),
-                "奇书网",
-                true,
-                Uri.parse("http://www.qisuu.com")));
-        otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
-                new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_earth)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18),
-                "Blah",
-                true,
-                Uri.parse("http://blah.me")));
+
         return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build(), convenienceCardBuilder.build(), otherCardBuilder.build());
     }
-
 
     @Override
     protected CharSequence getActivityTitle() {
@@ -314,4 +280,3 @@ public class AboutActivity extends MaterialAboutActivity {
         return new MyViewTypeManager();
     }
 }
-

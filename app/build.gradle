@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
-        applicationId "com.delsart.bookdownload"
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 151
-        versionName "1.51"
+        applicationId "com.tobeforever.bookdownload"
+        minSdkVersion 25
+        targetSdkVersion 28
+        versionCode 20
+        versionName "2.0"
         resConfigs "zh"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -39,7 +39,4 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     testCompile 'junit:junit:4.12'
-//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 }
