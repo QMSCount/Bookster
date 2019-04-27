@@ -23,8 +23,8 @@
             android:title="小书屋" />
         <SwitchPreference
             android:defaultValue="true"
-            android:key="知轩"
-            android:title="知轩" />
+            android:key="知轩藏书"
+            android:title="知轩藏书" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="周读"

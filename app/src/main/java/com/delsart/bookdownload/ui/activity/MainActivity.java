@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        autoupdate = getSharedPreferences("com.delsart.bookdownload_preferences", MODE_PRIVATE);
+        autoupdate = getSharedPreferences("com.tobeforever.bookdownload_preferences", MODE_PRIVATE);
         StatusBarUtils.MIUISetStatusBarLightMode(this, true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
         addpage(new ZhiXuanFragment(), "知轩藏书");
         addpage(new ZhouDuFragment(), "周读");
         addpage(new ShuYuZheFragment(), "书语者");
-        addpage(new XiaoShuWuFragment(), "我的小书屋");
+        addpage(new XiaoShuWuFragment(), "小书屋");
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
