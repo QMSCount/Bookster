@@ -5,10 +5,10 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.tobeforever.bookdownload"
-        minSdkVersion 25
+        minSdkVersion 14
         targetSdkVersion 28
         versionCode 20
-        versionName "2.0"
+        versionName "2.1"
         resConfigs "zh"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
