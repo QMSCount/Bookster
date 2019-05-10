@@ -44,20 +44,18 @@ public class ShuYuZheService extends BaseService {
             public void run() {
                 try {
                     list.clear();
-                    //Log.d(TAG, "run: " + mBaseUrl + "/" + mPage);
                     Elements select = Jsoup.connect(mBaseUrl + "/" + mPage)
-                            .timeout(5000)
+                            .timeout(10000)
                             .ignoreContentType(true)
                             .ignoreHttpErrors(true)
                             .userAgent(Url.PC_AGENT)
                             .get()
                             .select("body > main > div.row > div.col-md-9 > div > table > tbody > tr");
-                    latch = new CountDownLatch(select.size() - 1);
-                    for (int i = 1; i < select.size(); i++) {
+                    latch = new CountDownLatch(select.size());
+                    for (int i = 0; i < select.size(); i++) {
                         runInSameTime(select.get(i));
                     }
 
-                    Log.d(TAG, "run: " + select.size());
                     latch.await();
                     mPage++;
 
@@ -65,15 +63,12 @@ public class ShuYuZheService extends BaseService {
                     msg.what = MsgType.SUCCESS;
                     msg.obj = list;
                     mHandler.sendMessage(msg);
-
-                } catch (IOException e) {
+                }
+                catch (Exception e) {
                     e.printStackTrace();
                     Message msg = mHandler.obtainMessage();
                     msg.what = MsgType.ERROR;
                     mHandler.sendMessage(msg);
-                }
-                catch (Exception e) {
-                    //
                 }
             }
         }).start();

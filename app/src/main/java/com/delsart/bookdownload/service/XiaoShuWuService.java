@@ -60,7 +60,10 @@ public class XiaoShuWuService extends BaseService {
                     mHandler.sendMessage(msg);
                 }
                 catch (Exception e) {
-                    //
+                    e.printStackTrace();
+                    Message msg = mHandler.obtainMessage();
+                    msg.what = MsgType.ERROR;
+                    mHandler.sendMessage(msg);
                 }
             }
         }).start();

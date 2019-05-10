@@ -55,14 +55,12 @@ public class ZhouDuService extends BaseService {
                     msg.what = MsgType.SUCCESS;
                     msg.obj = list;
                     mHandler.sendMessage(msg);
-                } catch (IOException e) {
+                }
+                catch (Exception e) {
                     e.printStackTrace();
                     Message msg = mHandler.obtainMessage();
                     msg.what = MsgType.ERROR;
                     mHandler.sendMessage(msg);
-                }
-                catch (Exception e) {
-                    //
                 }
             }
         }).start();

@@ -57,7 +57,10 @@ public class AiXiaService extends BaseService {
                     msg.obj = list;
                     mHandler.sendMessage(msg);
                 } catch (Exception e) {
-                    //
+                    e.printStackTrace();
+                    Message msg = mHandler.obtainMessage();
+                    msg.what = MsgType.ERROR;
+                    mHandler.sendMessage(msg);
                 }
             }
         }).start();
