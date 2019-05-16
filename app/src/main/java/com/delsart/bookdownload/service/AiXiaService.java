@@ -44,7 +44,7 @@ public class AiXiaService extends BaseService {
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)
                             .get()
-                            .select("body > section> ul > li > div > a");
+                            .select("body > section > ul > li > div > a");
 
                     latch = new CountDownLatch(select.size());
                     for (Element element : select) {
