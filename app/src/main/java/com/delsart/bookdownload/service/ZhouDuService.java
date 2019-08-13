@@ -29,9 +29,10 @@ public class ZhouDuService extends BaseService {
         super(handler, keywords);
         this.mHandler = handler;
         mPage = 1;
-        mBaseUrl = Url.ZHOUDU + keywords + "&page=";
+        mBaseUrl = Url.ZHOUDU + keywords + "&p=";
     }
 
+    String lasts="";
     @Override
     public void get() {
         new Thread(new Runnable() {
@@ -43,13 +44,17 @@ public class ZhouDuService extends BaseService {
                             .timeout(10000)
                             .ignoreContentType(true)
                             .ignoreHttpErrors(true)
+                            .userAgent(Url.MOBBILE_AGENT)
                             .get()
-                            .select("body > div > div > ul > a");
+                            .select("body > div.w_news > dl > dd > a");
                     latch = new CountDownLatch(select.size());
                     for (int i = 0; i < select.size(); i++) {
                         runInSameTime(select.get(i));
                     }
                     latch.await();
+                    if (select.toString().equals(lasts))
+                        list.clear();
+                    lasts=select.toString();
                     mPage++;
                     Message msg = mHandler.obtainMessage();
                     msg.what = MsgType.SUCCESS;
@@ -76,20 +81,21 @@ public class ZhouDuService extends BaseService {
                             .ignoreHttpErrors(true)
                             .get();
 
-                    String t = document.select("body > div > div > div.hanghang-za > div.hanghang-shu-content > div.hanghang-shu-content-font").text();
+                    String t = document.select("body > div.news_detail > div.content").text();
                     if (t.length() < 5) {
                         latch.countDown();
                         return;
                     }
-                    String name = document.select("body > div > div > div.hanghang-za > div:nth-child(1)").text();
+                    String name = document.select("body > div.news_detail > div.content > p:nth-child(1)").text();
                     String status = "";
                     String time = "";
-                    String info = t.substring(t.indexOf("简介"), t.length());
-                    String category = document.select("body > div > div > div.hanghang-za > div.hanghang-shu-content > div.hanghang-shu-content-font > p:nth-child(2)").text();
-                    String author = document.select("body > div > div > div.hanghang-za > div.hanghang-shu-content > div.hanghang-shu-content-font > p:nth-child(1)").text();
+                    String info = document.select("body > div.news_detail > div.content > p:nth-child(5)").text();
+                    String category = "";
+                    String author = document.select("body > div.news_detail > div.content > p:nth-child(2)").text();
                     String words = "";
-                    String url = document.select("body > div > div > div.hanghang-za > div.hanghang-box > div.hanghang-shu-content-btn > a").attr("href");
-                    String pic = document.select("body > div > div > div.hanghang-za > div.hanghang-shu-content > div.hanghang-shu-content-img > img").attr("abs:src");
+
+                    String url = element.attr("abs:href");
+                    String pic = document.select("body > div.news_detail > div.tu > img").attr("abs:src");
                     NovelBean no = new NovelBean(name, time, info, category, status, author, words, pic, url);
                     list.add(no);
                 }
@@ -108,7 +114,30 @@ public class ZhouDuService extends BaseService {
         mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
-                urls.add(new DownloadBean("百度云", url));
+                try {
+                    Document document = Jsoup.connect(url)
+                            .ignoreContentType(true)
+                            .ignoreHttpErrors(true)
+                            .get();
+
+                    String u1 = document.select("#guanzhu > div.pic > p:nth-child(1) > a").attr("href");
+                    String u1n = document.select("#guanzhu > div.pic > p:nth-child(1) > a").text();
+                    String u2 = document.select("#guanzhu > div.pic > p:nth-child(2) > a").attr("href");
+                    String u2n = document.select("#guanzhu > div.pic > p:nth-child(2) > a").text();
+                    String u3 = document.select("#guanzhu > div.pic > p:nth-child(3) > a").attr("href");
+                    String u3n = document.select("#guanzhu > div.pic > p:nth-child(3) > a").text();
+                    if (!u1n.isEmpty()){
+                        urls.add(new DownloadBean(u1n, u1));
+                    }
+                    if (!u2n.isEmpty()){
+                        urls.add(new DownloadBean(u2n, u2));
+                    }
+                    if (!u3n.isEmpty()){
+                        urls.add(new DownloadBean(u3n, u3));
+                    }
+                } catch (Exception e) {
+                    //
+                }
                 latch.countDown();
             }
         });

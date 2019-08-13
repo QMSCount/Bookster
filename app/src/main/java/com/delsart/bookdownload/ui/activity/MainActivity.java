@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             });
             builder.show();
         }
-        if (firstime.getInt("showrate", 1) > 3 && firstime.getBoolean("ifshowrate", true)) {
+        if (firstime.getInt("showrate", 1) > 3 && firstime.getBoolean("ifshowrate1", true)) {
             editor.putInt("showrate", 1);
             editor.apply();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -123,17 +123,14 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("捐赠", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (AlipayZeroSdk.hasInstalledAlipayClient(MyApplication.getContext()))
-                        AlipayZeroSdk.startAlipayClient(MainActivity.this, "fkx077990wbathuutf4of5a");
-                    else
-                        Toast.makeText(getApplicationContext(), "没有安装支付宝", Toast.LENGTH_SHORT).show();
-
+                    Uri uri = Uri.parse("https://miao.su/images/2019/08/13/weixin0d829.jpg");
+                    startActivity(new Intent(Intent.ACTION_VIEW, uri));
                 }
             });
             builder.setNeutralButton("拒绝，并不再提醒", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    editor.putBoolean("ifshowrate", false);
+                    editor.putBoolean("ifshowrate1", false);
                     editor.apply();
                 }
             });

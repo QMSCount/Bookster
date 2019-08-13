@@ -77,14 +77,14 @@ public class AiXiaService extends BaseService {
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)
                             .get();
-                    String name =document.select("body > section:nth-child(3) > ul > li > div:nth-child(2) > h4").text();
-                    String time = "最后更新：" + document.select("body > section:nth-child(3) > ul > li > div:nth-child(2) > p:nth-child(3)").text();
+                    String name =document.select("body > section:nth-child(3) > div:nth-child(2) > h4").text();
+                    String time = "最后更新：" + document.select("body > section:nth-child(3) >div:nth-child(2) > p:nth-child(3)").text();
                     String info = document.select("body > section:nth-child(5) > p").text();
                     String category = "类型：" + document.select("body > div > div > a:nth-child(2)").text();
                     String status = "";
-                    String author = "作者：" +  document.select("body > section:nth-child(3) > ul > li > div:nth-child(2) > p:nth-child(2)> a").text();
-                    String words = document.select("body > section:nth-child(3) > ul > li > div:nth-child(2) > p:nth-child(4)").text();
-                    String pic = document.select("body > section:nth-child(3) > ul > li > div.ix-list-img-square > img").attr("abs:src");
+                    String author = "作者：" +  document.select("body > section:nth-child(3) > div:nth-child(2) > p:nth-child(2)> a").text();
+                    String words = document.select("body > section:nth-child(3) > div:nth-child(2) > p:nth-child(4)").text();
+                    String pic = document.select("body > section:nth-child(3) > div.ix-list-img-square > img").attr("abs:src");
                     NovelBean no = new NovelBean(name, time, info, category, status, author, words, pic, url);
                     list.add(no);
                 } catch (Exception e) {

@@ -203,7 +203,7 @@ public class AboutActivity extends MaterialAboutActivity {
                 .build());
 
         convenienceCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("捐赠，请维护者 @狂飙的犀牛 喝瓶快乐水（支付宝）")
+                .text("捐赠，请维护者 @狂飙的犀牛 喝瓶快乐水（微信）")
                 .icon(new IconicsDrawable(c)
                         .icon(CommunityMaterial.Icon.cmd_coffee)
                         .color(ContextCompat.getColor(c, colorIcon))
@@ -211,10 +211,8 @@ public class AboutActivity extends MaterialAboutActivity {
                 .setOnClickAction(new MaterialAboutItemOnClickAction() {
                     @Override
                     public void onClick() {
-                        if (AlipayZeroSdk.hasInstalledAlipayClient(MyApplication.getContext()))
-                            AlipayZeroSdk.startAlipayClient(activity, "fkx077990wbathuutf4of5a");
-                        else
-                            Toast.makeText(getApplicationContext(), "没有安装支付宝", Toast.LENGTH_SHORT).show();
+                        Uri uri = Uri.parse("https://miao.su/images/2019/08/13/weixin0d829.jpg");
+                        startActivity(new Intent(Intent.ACTION_VIEW, uri));
                     }
                 })
                 .build());
@@ -237,7 +235,7 @@ public class AboutActivity extends MaterialAboutActivity {
                         .sizeDp(18),
                 "知轩藏书",
                 true,
-                Uri.parse("http://www.zxcs8.com")));
+                Uri.parse("http://www.zxcs.me")));
 
         otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
                 new IconicsDrawable(c)
