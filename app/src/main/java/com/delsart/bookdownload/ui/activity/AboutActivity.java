@@ -262,7 +262,7 @@ public class AboutActivity extends MaterialAboutActivity {
                         .sizeDp(18),
                 "我的小书屋",
                 true,
-                Uri.parse("http://mebook.cc")));
+                Uri.parse("http://www.shuwu.mobi")));
 
         return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build(), convenienceCardBuilder.build(), otherCardBuilder.build());
     }
