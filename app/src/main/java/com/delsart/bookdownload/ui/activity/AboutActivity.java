@@ -188,21 +188,6 @@ public class AboutActivity extends MaterialAboutActivity {
                 "Question concerning MaterialAboutLibrary"));
 
         convenienceCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("捐赠，请作者 @Delsart 喝杯果汁（微信）")
-                .icon(new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_coffee)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18))
-                .setOnClickAction(new MaterialAboutItemOnClickAction() {
-                    @Override
-                    public void onClick() {
-                        Uri uri = Uri.parse("http://a3.qpic.cn/psb?/V10dNxbX00vsuB/eKAX6FA4sv5Y3Tnb.lrqpj6OjMWE6QuHyv2Z*h2MBtk!/b/dGoBAAAAAAAA&bo=.AJSA*gCUgMDCSw!&rf=viewer_4");
-                        startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                    }
-                })
-                .build());
-
-        convenienceCardBuilder.addItem(new MaterialAboutActionItem.Builder()
                 .text("捐赠，请维护者 @狂飙的犀牛 喝瓶快乐水（微信）")
                 .icon(new IconicsDrawable(c)
                         .icon(CommunityMaterial.Icon.cmd_coffee)
@@ -212,6 +197,21 @@ public class AboutActivity extends MaterialAboutActivity {
                     @Override
                     public void onClick() {
                         Uri uri = Uri.parse("https://miao.su/images/2019/08/13/weixin0d829.jpg");
+                        startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                    }
+                })
+                .build());
+
+        convenienceCardBuilder.addItem(new MaterialAboutActionItem.Builder()
+                .text("捐赠，请作者 @Delsart 喝杯果汁（微信）")
+                .icon(new IconicsDrawable(c)
+                        .icon(CommunityMaterial.Icon.cmd_coffee)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18))
+                .setOnClickAction(new MaterialAboutItemOnClickAction() {
+                    @Override
+                    public void onClick() {
+                        Uri uri = Uri.parse("http://a3.qpic.cn/psb?/V10dNxbX00vsuB/eKAX6FA4sv5Y3Tnb.lrqpj6OjMWE6QuHyv2Z*h2MBtk!/b/dGoBAAAAAAAA&bo=.AJSA*gCUgMDCSw!&rf=viewer_4");
                         startActivity(new Intent(Intent.ACTION_VIEW, uri));
                     }
                 })
@@ -262,7 +262,7 @@ public class AboutActivity extends MaterialAboutActivity {
                         .sizeDp(18),
                 "我的小书屋",
                 true,
-                Uri.parse("http://www.shuwu.mobi")));
+                Uri.parse("http://mebook.cc/")));
 
         return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build(), convenienceCardBuilder.build(), otherCardBuilder.build());
     }

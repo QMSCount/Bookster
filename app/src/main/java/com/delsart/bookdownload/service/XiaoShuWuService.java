@@ -42,7 +42,7 @@ public class XiaoShuWuService extends BaseService {
                 try {
                     list.clear();
                     Elements select = Jsoup.connect(mBaseUrl.replace("0", mPage + ""))
-                            .timeout(10000)
+                            .timeout(30000)
                             .ignoreContentType(true)
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)

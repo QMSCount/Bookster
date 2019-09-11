@@ -6,9 +6,9 @@ android {
     defaultConfig {
         applicationId "com.tobeforever.bookdownload"
         minSdkVersion 14
-        targetSdkVersion 28
-        versionCode 24
-        versionName "2.4"
+        targetSdkVersion 29
+        versionCode 25
+        versionName "2.5"
         resConfigs "zh"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
