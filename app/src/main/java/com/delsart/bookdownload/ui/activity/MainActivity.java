@@ -30,6 +30,7 @@ import com.delsart.bookdownload.ui.fragment.AiXiaFragment;
 import com.delsart.bookdownload.ui.fragment.BaseFragment;
 import com.delsart.bookdownload.ui.fragment.ShuYuZheFragment;
 import com.delsart.bookdownload.ui.fragment.XiaoShuWuFragment;
+import com.delsart.bookdownload.ui.fragment.SanQiuShuWuFragment;
 import com.delsart.bookdownload.ui.fragment.ZhiXuanFragment;
 import com.delsart.bookdownload.ui.fragment.ZhouDuFragment;
 import com.delsart.bookdownload.utils.StatusBarUtils;
@@ -74,18 +75,18 @@ public class MainActivity extends AppCompatActivity {
 
         // 自动更新检测
         if (autoupdate.getBoolean("autoUpdate", true)) {
-//            try {
-//                getUpdate();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+           /* try {
+                getUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
         }
     }
 
     private void showInfoDialog() {
-        firstime = getSharedPreferences("data", MODE_PRIVATE);
+        firstime = getSharedPreferences("data2", MODE_PRIVATE);
         editor = firstime.edit();
-        if (firstime.getInt("first", 0) == 0) {
+        if (firstime.getInt("first2", 0) == 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("使用须知");
             builder.setCancelable(false);
@@ -99,14 +100,14 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    editor.putInt("first", 1);
+                    editor.putInt("first2", 1);
                     editor.apply();
                 }
             });
             builder.show();
         }
-        if (firstime.getInt("showrate", 1) > 3 && firstime.getBoolean("ifshowrate1", true)) {
-            editor.putInt("showrate", 1);
+        if (firstime.getInt("showrate2", 1) > 3 && firstime.getBoolean("ifshowrate2", true)) {
+            editor.putInt("showrate2", 1);
             editor.apply();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("嗨，还好吗？");
@@ -130,13 +131,13 @@ public class MainActivity extends AppCompatActivity {
             builder.setNeutralButton("拒绝，并不再提醒", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    editor.putBoolean("ifshowrate1", false);
+                    editor.putBoolean("ifshowrate2", false);
                     editor.apply();
                 }
             });
             builder.show();
         } else {
-            editor.putInt("showrate", firstime.getInt("showrate", 1) + 1);
+            editor.putInt("showrate2", firstime.getInt("showrate2", 1) + 1);
             editor.apply();
         }
     }
@@ -147,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("https://hereacg.org/bookster/update.json");
+
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(3000);
@@ -241,7 +243,8 @@ public class MainActivity extends AppCompatActivity {
         addpage(new ZhiXuanFragment(), "知轩藏书");
         addpage(new ZhouDuFragment(), "周读");
         addpage(new ShuYuZheFragment(), "书语者");
-        addpage(new XiaoShuWuFragment(), "小书屋");
+//        addpage(new XiaoShuWuFragment(), "小书屋");
+        addpage(new SanQiuShuWuFragment(), "三秋书屋");
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

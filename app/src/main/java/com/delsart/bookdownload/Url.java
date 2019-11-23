@@ -9,5 +9,6 @@ public interface Url {
     String ZHOUDU = "http://www.ireadweek.com/index.php?g=portal&m=search&a=index&keyword=";
     String SHUYUZHE = "https://book.shuyuzhe.com/search/index/";
     String XIAOSHUWU = "http://mebook.cc/page/0?s=";
+    String SANQIU = "https://www.d4j.cn/?s=";
     String AIXIA = "https://m.ixdzs.com/search?k=";
 }

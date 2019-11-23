@@ -19,8 +19,8 @@
             android:title="书语者" />
         <SwitchPreference
             android:defaultValue="true"
-            android:key="小书屋"
-            android:title="小书屋" />
+            android:key="三秋书屋"
+            android:title="三秋书屋" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="知轩藏书"

@@ -260,9 +260,18 @@ public class AboutActivity extends MaterialAboutActivity {
                         .icon(CommunityMaterial.Icon.cmd_earth)
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18),
-                "我的小书屋",
+                "三秋书屋",
                 true,
-                Uri.parse("http://mebook.cc/")));
+                Uri.parse("https://www.d4j.cn/")));
+
+//        otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
+//                new IconicsDrawable(c)
+//                        .icon(CommunityMaterial.Icon.cmd_earth)
+//                        .color(ContextCompat.getColor(c, colorIcon))
+//                        .sizeDp(18),
+//                "我的小书屋",
+//                true,
+//                Uri.parse("http://mebook.cc/")));
 
         return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build(), convenienceCardBuilder.build(), otherCardBuilder.build());
     }
