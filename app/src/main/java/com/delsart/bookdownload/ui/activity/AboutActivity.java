@@ -68,7 +68,7 @@ public class AboutActivity extends MaterialAboutActivity {
         // Add items to card
         appCardBuilder.addItem(new MaterialAboutTitleItem.Builder()
                 .text(R.string.app_name)
-                .desc("© 2019 狂飙的犀牛")
+                .desc("© 2020 狂飙的犀牛")
                 .icon(R.mipmap.ic_launcher)
                 .build());
 
@@ -242,36 +242,9 @@ public class AboutActivity extends MaterialAboutActivity {
                         .icon(CommunityMaterial.Icon.cmd_earth)
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18),
-                "周读",
+                "棉花糖小说网",
                 true,
-                Uri.parse("http://www.ireadweek.com")));
-
-        otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
-                new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_earth)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18),
-                "书语者",
-                true,
-                Uri.parse("https://book.shuyuzhe.com")));
-
-        otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
-                new IconicsDrawable(c)
-                        .icon(CommunityMaterial.Icon.cmd_earth)
-                        .color(ContextCompat.getColor(c, colorIcon))
-                        .sizeDp(18),
-                "三秋书屋",
-                true,
-                Uri.parse("https://www.d4j.cn/")));
-
-//        otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
-//                new IconicsDrawable(c)
-//                        .icon(CommunityMaterial.Icon.cmd_earth)
-//                        .color(ContextCompat.getColor(c, colorIcon))
-//                        .sizeDp(18),
-//                "我的小书屋",
-//                true,
-//                Uri.parse("http://mebook.cc/")));
+                Uri.parse("http://www.mianhuatang520.com/")));
 
         return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build(), convenienceCardBuilder.build(), otherCardBuilder.build());
     }

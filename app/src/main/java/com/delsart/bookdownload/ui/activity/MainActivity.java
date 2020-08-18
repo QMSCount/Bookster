@@ -28,6 +28,7 @@ import com.delsart.bookdownload.R;
 import com.delsart.bookdownload.adapter.PagerAdapter;
 import com.delsart.bookdownload.ui.fragment.AiXiaFragment;
 import com.delsart.bookdownload.ui.fragment.BaseFragment;
+import com.delsart.bookdownload.ui.fragment.MianHuaTangFragment;
 import com.delsart.bookdownload.ui.fragment.ShuYuZheFragment;
 import com.delsart.bookdownload.ui.fragment.XiaoShuWuFragment;
 import com.delsart.bookdownload.ui.fragment.SanQiuShuWuFragment;
@@ -241,10 +242,11 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setBackgroundDrawable(null);
         addpage(new AiXiaFragment(), "爱下");
         addpage(new ZhiXuanFragment(), "知轩藏书");
-        addpage(new ZhouDuFragment(), "周读");
-        addpage(new ShuYuZheFragment(), "书语者");
+//        addpage(new ZhouDuFragment(), "周读");
+//        addpage(new ShuYuZheFragment(), "书语者");
 //        addpage(new XiaoShuWuFragment(), "小书屋");
-        addpage(new SanQiuShuWuFragment(), "三秋书屋");
+//        addpage(new SanQiuShuWuFragment(), "三秋书屋");
+        addpage(new MianHuaTangFragment(), "棉花糖");
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

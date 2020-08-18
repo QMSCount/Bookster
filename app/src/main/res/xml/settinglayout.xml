@@ -15,19 +15,11 @@
             android:title="爱下" />
         <SwitchPreference
             android:defaultValue="true"
-            android:key="书语者"
-            android:title="书语者" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="三秋书屋"
-            android:title="三秋书屋" />
-        <SwitchPreference
-            android:defaultValue="true"
             android:key="知轩藏书"
             android:title="知轩藏书" />
         <SwitchPreference
             android:defaultValue="true"
-            android:key="周读"
-            android:title="周读" />
+            android:key="棉花糖"
+            android:title="棉花糖" />
     </PreferenceCategory>
 </PreferenceScreen>
