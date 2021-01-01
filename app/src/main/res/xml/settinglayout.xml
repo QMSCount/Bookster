@@ -15,8 +15,12 @@
             android:title="爱下" />
         <SwitchPreference
             android:defaultValue="true"
-            android:key="知轩藏书"
-            android:title="知轩藏书" />
+            android:key="知轩藏书1"
+            android:title="知轩藏书1" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="知轩藏书2"
+            android:title="知轩藏书2" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="棉花糖"

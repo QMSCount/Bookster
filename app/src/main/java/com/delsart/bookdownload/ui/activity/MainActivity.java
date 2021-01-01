@@ -21,19 +21,14 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.delsart.bookdownload.MyApplication;
 import com.delsart.bookdownload.R;
 import com.delsart.bookdownload.adapter.PagerAdapter;
 import com.delsart.bookdownload.ui.fragment.AiXiaFragment;
 import com.delsart.bookdownload.ui.fragment.BaseFragment;
 import com.delsart.bookdownload.ui.fragment.MianHuaTangFragment;
-import com.delsart.bookdownload.ui.fragment.ShuYuZheFragment;
-import com.delsart.bookdownload.ui.fragment.XiaoShuWuFragment;
-import com.delsart.bookdownload.ui.fragment.SanQiuShuWuFragment;
-import com.delsart.bookdownload.ui.fragment.ZhiXuanFragment;
-import com.delsart.bookdownload.ui.fragment.ZhouDuFragment;
+import com.delsart.bookdownload.ui.fragment.ZhiXuanFragment1;
+import com.delsart.bookdownload.ui.fragment.ZhiXuanFragment2;
 import com.delsart.bookdownload.utils.StatusBarUtils;
 
 import org.json.JSONObject;
@@ -45,8 +40,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences firstime;
@@ -241,7 +234,8 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         getWindow().setBackgroundDrawable(null);
         addpage(new AiXiaFragment(), "爱下");
-        addpage(new ZhiXuanFragment(), "知轩藏书");
+        addpage(new ZhiXuanFragment1(), "知轩藏书1");
+        addpage(new ZhiXuanFragment2(), "知轩藏书2");
 //        addpage(new ZhouDuFragment(), "周读");
 //        addpage(new ShuYuZheFragment(), "书语者");
 //        addpage(new XiaoShuWuFragment(), "小书屋");

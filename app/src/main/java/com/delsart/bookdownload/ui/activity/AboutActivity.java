@@ -233,7 +233,16 @@ public class AboutActivity extends MaterialAboutActivity {
                         .icon(CommunityMaterial.Icon.cmd_earth)
                         .color(ContextCompat.getColor(c, colorIcon))
                         .sizeDp(18),
-                "知轩藏书",
+                "知轩藏书1",
+                true,
+                Uri.parse("http://www.zxcs.me")));
+
+        otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
+                new IconicsDrawable(c)
+                        .icon(CommunityMaterial.Icon.cmd_earth)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18),
+                "知轩藏书2",
                 true,
                 Uri.parse("http://www.zxcs.info")));
 
