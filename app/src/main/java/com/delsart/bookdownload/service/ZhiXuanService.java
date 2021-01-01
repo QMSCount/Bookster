@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,7 +34,9 @@ public class ZhiXuanService extends BaseService {
         mPage = 1;
         mBaseUrl = Url.ZHIXUAN + keywords + "&page=";
     }
-String lasts="";
+
+    String lasts = "";
+
     @Override
     public void get() {
         new Thread(new Runnable() {
@@ -47,7 +50,9 @@ String lasts="";
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)
                             .get()
-                            .select("div.info");
+                            .select("#plist");
+//                            .select("div.info");
+//                            .select("#pleft > dlid=\\\"plist\\\"");
                     latch = new CountDownLatch(select.size());
                     for (int i = 0; i < select.size(); i++) {
                         runInSameTime(select.get(i));
@@ -55,14 +60,13 @@ String lasts="";
                     latch.await();
                     if (select.toString().equals(lasts))
                         list.clear();
-                    lasts=select.toString();
+                    lasts = select.toString();
                     mPage++;
                     Message msg = mHandler.obtainMessage();
                     msg.what = MsgType.SUCCESS;
                     msg.obj = list;
                     mHandler.sendMessage(msg);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     Message msg = mHandler.obtainMessage();
                     msg.what = MsgType.ERROR;
@@ -76,7 +80,7 @@ String lasts="";
         mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
-                String url = element.select("a").attr("abs:href");
+                String url = element.select("dt > a").attr("abs:href");
                 Document document = null;
                 try {
                     document = Jsoup.connect(url)
@@ -85,14 +89,14 @@ String lasts="";
                             .userAgent(Url.MOBBILE_AGENT)
                             .get();
 
-                    String t = document.select("#m > div.postcont > p:nth-child(4)").text();
-                    String name = document.select("#m > div.posttitle").text().replace("（校对版全本）", "").replace("《", "").replace("》", "");
-                    String time = "收录日期：" + element.select("span").text();
+                    String t = document.select("#content > div:nth-child(4) > p:nth-child(2)").text();
+                    String name = document.select("#content > h1").text().replace("（校对版全本）", "").replace("（整理版下载）", "").replace("（精校版全本）", "").replace("（精校版下载）", "").replace("（精校版下载）", "").replace("《", "").replace("》", "");
+                    String time = "";
                     String info = "";
                     Matcher m = Pattern.compile("【内容简介】.+").matcher(t);
                     if (m.find())
                         info = m.group(0).replace("　　", "\n").replace("      ", "\n").replace("【内容简介】： \n", "");
-                    String category = document.select("#m > div.postcont > div.pagefujian > div.filecont > p.fileinfo > span:nth-child(1)").text();
+                    String category = document.select("#content > p > a:nth-child(2)").text();
                     String status = "";
                     String author = "";
                     if (name.contains("作者")) {
@@ -102,12 +106,11 @@ String lasts="";
                     String words = "";
                     if (t.contains("【内容简介"))
                         words = t.substring(0, t.indexOf("【内容简介")).replace("【", "").replace("】", "");
-                    String pic = document.select("img[title=点击查看原图]").attr("abs:src");
-                    String durl=document.select("#m > div.postcont > div.pagefujian > div.filecont > p.filetit > a").attr("abs:href");
+                    String pic = document.select("#content > div:nth-child(3) > span > a > img").attr("abs:src");
+                    String durl = document.select("#content > div:nth-child(4) > div.pagefujian > div.down_2 > a").attr("abs:href");
                     NovelBean no = new NovelBean(name, time, info, category, status, author, words, pic, durl);
                     list.add(no);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     //
                 }
                 latch.countDown();
@@ -130,12 +133,14 @@ String lasts="";
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)
                             .get();
-                    Elements elements=document.select("body > div.wrap > div.content > div:nth-child(4) > div.panel-body a");
+                    Elements elements = document.select("body > div.wrap > div.panel > div > span");
                     for (Element element : elements) {
-                        urls.add(new DownloadBean(element.text(), element.attr("abs:href")));
+                        String URL = element.select("a").attr("abs:href");
+                        if (URL != null && !URL.equals("")) {
+                            urls.add(new DownloadBean(element.text(), element.select("a").attr("abs:href")));
+                        }
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     //
                 }
                 latch.countDown();

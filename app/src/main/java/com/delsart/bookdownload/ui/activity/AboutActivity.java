@@ -235,7 +235,7 @@ public class AboutActivity extends MaterialAboutActivity {
                         .sizeDp(18),
                 "知轩藏书",
                 true,
-                Uri.parse("http://www.zxcs.me")));
+                Uri.parse("http://www.zxcs.info")));
 
         otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
                 new IconicsDrawable(c)
