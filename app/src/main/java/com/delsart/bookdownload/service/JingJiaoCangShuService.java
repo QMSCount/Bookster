@@ -8,6 +8,8 @@ import com.delsart.bookdownload.Url;
 import com.delsart.bookdownload.bean.DownloadBean;
 import com.delsart.bookdownload.bean.NovelBean;
 
+import com.alibaba.fastjson.JSONObject;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,21 +19,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
-import static com.delsart.bookdownload.helper.trustEveryone.trustEveryone;
-
-public class AiXiaService extends BaseService {
+public class JingJiaoCangShuService extends BaseService {
     private final Handler mHandler;
     private int mPage;
     private String mBaseUrl;
     private CountDownLatch latch;
     private ArrayList<NovelBean> list = new ArrayList<>();
 
-    public AiXiaService(Handler handler, String keywords) {
+    public JingJiaoCangShuService(Handler handler, String keywords) {
         super(handler, keywords);
         this.mHandler = handler;
         mPage = 1;
-        mBaseUrl = Url.AIXIA + keywords + "&page=";
+        mBaseUrl = Url.JJCS + "page/00?s=" + keywords;
     }
+
+    String lasts = "";
 
     @Override
     public void get() {
@@ -40,20 +42,21 @@ public class AiXiaService extends BaseService {
             public void run() {
                 try {
                     list.clear();
-                    trustEveryone();
-                    Elements select = Jsoup.connect(mBaseUrl + mPage)
+                    Elements select = Jsoup.connect(mBaseUrl.replace("00", mPage + ""))
                             .timeout(10000)
                             .ignoreContentType(true)
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)
                             .get()
-                            .select("body > section > ul > li > div > a");
-
+                            .select("#main-content > div.container-fluid > div > section > div > div.widget-content > ul > li");
                     latch = new CountDownLatch(select.size());
-                    for (Element element : select) {
-                        runInSameTime(element);
+                    for (int i = 0; i < select.size(); i++) {
+                        runInSameTime(select.get(i));
                     }
                     latch.await();
+                    if (select.toString().equals(lasts))
+                        list.clear();
+                    lasts = select.toString();
                     mPage++;
                     Message msg = mHandler.obtainMessage();
                     msg.what = MsgType.SUCCESS;
@@ -73,22 +76,27 @@ public class AiXiaService extends BaseService {
         mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
-                String url = element.attr("abs:href");
+                String url = element.select("article > a").attr("abs:href");
+                Document document = null;
                 try {
-                    Document document = Jsoup.connect(url)
+                    document = Jsoup.connect(url)
+                            .timeout(10000)
                             .ignoreContentType(true)
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)
                             .get();
-                    String name =document.select("body > section:nth-child(3) > div:nth-child(2) > h4").text();
-                    String time = "最后更新：" + document.select("body > section:nth-child(3) >div:nth-child(2) > p:nth-child(3)").text();
-                    String info = document.select("body > section:nth-child(5) > p").text();
-                    String category = "类型：" + document.select("body > div > div > a:nth-child(2)").text();
-                    String status = "";
-                    String author = "作者：" +  document.select("body > section:nth-child(3) > div:nth-child(2) > p:nth-child(2)> a").text();
-                    String words = document.select("body > section:nth-child(3) > div:nth-child(2) > p:nth-child(4)").text();
-                    String pic = document.select("body > section:nth-child(3) > div.ix-list-img-square > img").attr("abs:src");
-                    NovelBean no = new NovelBean(name, time, info, category, status, author, words, pic, url);
+
+                    String name = document.select("div.entry > p:nth-child(2)").text();
+                    String author = document.select("div.entry > p:nth-child(3)").text();
+                    String status = document.select("div.entry > p:nth-child(4)").text();
+                    String words = document.select("div.entry > p:nth-child(6)").text();
+                    String category = document.select("#post-header > p > span.cat > a").text();
+                    String time = "";
+                    String info = "小说简介：\r\n" + document.select("div.entry > p:nth-child(9)").text();
+                    String pic = document.select("div.entry > p:nth-child(1) > img").attr("abs:src");
+                    String bookid = document.select("#comment_post_ID").attr("value");
+//                    String durl = document.select("#J_DLIPPCont > div > div.dlipp-cont-bd > a").attr("abs:href");
+                    NovelBean no = new NovelBean(name, time, info, category, status, author, words, pic, bookid);
                     list.add(no);
                 } catch (Exception e) {
                     //
@@ -99,33 +107,34 @@ public class AiXiaService extends BaseService {
     }
 
     @Override
-    public ArrayList<DownloadBean> getDownloadurls(final String url) throws InterruptedException {
+    public ArrayList<DownloadBean> getDownloadurls(final String bookid) throws InterruptedException {
         latch = new CountDownLatch(1);
         final ArrayList<DownloadBean> urls = new ArrayList<>();
         mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    trustEveryone();
-                    Elements elements = Jsoup.connect(url)
+                    Document doc = Jsoup.connect(Url.JJCS + "wp-admin/admin-ajax.php")
                             .timeout(10000)
                             .ignoreContentType(true)
                             .ignoreHttpErrors(true)
                             .userAgent(Url.MOBBILE_AGENT)
-                            .get()
-                            .select("body > section:nth-child(6)");
-                    String u1 = elements.select("li:nth-child(2) > a").attr("abs:href");
-                    String u1n = elements.select("li:nth-child(2) > a").text();
-                    String u2 = elements.select("li:nth-child(3) > a").attr("abs:href");
-                    String u2n = elements.select("li:nth-child(3) > a").text();
-                    urls.add(new DownloadBean(u1n, u1));
-                    urls.add(new DownloadBean(u2n, u2));
+                            .data("action", "wb_dlipp_front",
+                                    "pid", bookid,
+                                    "rid", "local")
+                            .post();
+
+                    JSONObject jsonObject = JSONObject.parseObject(doc.select("body").html()).getJSONObject("data");
+                    String url = (String)jsonObject.get("url");
+                    urls.add(new DownloadBean("解压密码：jjcs", url));
+
                 } catch (Exception e) {
                     //
                 }
                 latch.countDown();
             }
         });
+
         latch.await();
         return urls;
     }

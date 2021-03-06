@@ -193,13 +193,14 @@ public abstract class BaseFragment extends Fragment {
         mHandler.setOnHandleMessageCallback(new OnHandleMessageCallback<BaseFragment>() {
             @Override
             public void handleMessage(BaseFragment fragment, Message msg) {
+                ArrayList<NovelBean> data;
                 switch (msg.what) {
                     case MsgType.ERROR:
                         mAdapter.loadMoreFail();
                         mAdapter.setEmptyView(mNoFoundView);
                         break;
                     case MsgType.SUCCESS:
-                        ArrayList<NovelBean> data = (ArrayList<NovelBean>) msg.obj;
+                        data = (ArrayList<NovelBean>) msg.obj;
                         if (data != null) {
                             mList.addAll(data);
                             if (data.size() > 0) {
@@ -212,6 +213,23 @@ public abstract class BaseFragment extends Fragment {
                         } else {
                             Snackbar.make(getActivity().findViewById(android.R.id.content), "未知错误", Snackbar.LENGTH_SHORT).show();
                         }
+                        break;
+                    case MsgType.RESULT:
+                         data = (ArrayList<NovelBean>) msg.obj;
+                        if (data != null) {
+                            mList.addAll(data);
+                            if (data.size() > 0) {
+                                mAdapter.addData(data);
+                            }
+                            else {
+                                mAdapter.setEmptyView(mNoFoundView);
+                            }
+                            mAdapter.loadMoreEnd();
+                        } else {
+                            Snackbar.make(getActivity().findViewById(android.R.id.content), "未知错误", Snackbar.LENGTH_SHORT).show();
+                        }
+                        break;
+                    default:
                         break;
                 }
             }

@@ -75,7 +75,6 @@ public class MianHuaTangService extends BaseService {
                     }
 
                     latch.await();
-                    mPage++;
 
                     Message msg = mHandler.obtainMessage();
                     msg.what = MsgType.SUCCESS;
@@ -98,9 +97,10 @@ public class MianHuaTangService extends BaseService {
             public void run() {
                 try {
                     Document document = Jsoup.connect(element.attr("abs:href"))
-                            .timeout(5000)
+                            .timeout(10000)
                             .ignoreContentType(true)
-                            .userAgent(Url.PC_AGENT)
+                            .ignoreHttpErrors(true)
+                            .userAgent(Url.MOBBILE_AGENT)
                             .get();
                     Elements elements = document.select("#maininfo");
                     String name = elements.select("#info > h1").text();
@@ -109,28 +109,10 @@ public class MianHuaTangService extends BaseService {
                     String info = elements.select("#intro > p:nth-child(1)").text();
                     String category =  "";
                     String author = elements.select("#info > div:nth-child(2)").text();
-                    String words =  "";
-                    String urlInfo=elements.select("#info > div:nth-child(3) > script").html();
-
-                    String bookid="";
-                    String key="";
-                    Pattern bookidPattern = Pattern.compile("'bookid=[0-9]+'");
-                    Matcher matcher1 = bookidPattern.matcher(urlInfo);
-                    while (matcher1.find()) {
-                        bookid=matcher1.group(0).replace("'","");
-                        break;
-                    }
-
-                    Pattern keyPattern = Pattern.compile("'&txtkey=[\\S]+'");
-                    Matcher matcher2 = keyPattern.matcher(urlInfo);
-                    while (matcher2.find()) {
-                        key=matcher2.group(0).replace("'", "");
-                        break;
-                    }
-
-                    String url = "http://www.mianhuatang520.com/download.aspx?"+bookid+key;
+                    String words=elements.select("#info > div:nth-child(5)").text();
+                    String durl=elements.select("#txtdownload").attr("abs:href");
                     String pic =  "";
-                    list.add(new NovelBean(name, time, info, category, status, author, words, pic, url));
+                    list.add(new NovelBean(name, time, info, category, status, author, words, pic, durl));
                 }
                 catch (Exception e) {
                     int a=1;
@@ -146,17 +128,43 @@ public class MianHuaTangService extends BaseService {
     public ArrayList<DownloadBean> getDownloadurls(final String url) throws InterruptedException {
         latch = new CountDownLatch(1);
         final ArrayList<DownloadBean> urls = new ArrayList<>();
-        mExecutorService.submit(new Runnable() {
+
+        mExecutorService.execute(new Runnable() {
             @Override
             public void run() {
+                Document document = null;
                 try {
-                    String u1n = "txt下载";
-                    urls.add(new DownloadBean(u1n, url));
+                    document = Jsoup.connect(url)
+                            .timeout(10000)
+                            .ignoreContentType(true)
+                            .ignoreHttpErrors(true)
+                            .userAgent(Url.MOBBILE_AGENT)
+                            .get();
+
+                    String text=document.select("#txtdownload").text();
+
+                    String urlInfo=document.select("#main > script").html();
+                    String bookid="";
+                    String key="";
+                    Pattern bookidPattern = Pattern.compile("'bookid=[0-9]+'");
+                    Matcher matcher1 = bookidPattern.matcher(urlInfo);
+                    while (matcher1.find()) {
+                        bookid=matcher1.group(0).replace("'","");
+                        break;
+                    }
+                    Pattern keyPattern = Pattern.compile("'&txtkey=[\\S]+'");
+                    Matcher matcher2 = keyPattern.matcher(urlInfo);
+                    while (matcher2.find()) {
+                        key=matcher2.group(0).replace("'", "");
+                        break;
+                    }
+                    String durl = "http://www.mianhuatang520.com/download.aspx?"+bookid+key;
+
+                    urls.add(new DownloadBean(text, durl));
                 }
                 catch (Exception e) {
                     //
                 }
-
                 latch.countDown();
             }
         });

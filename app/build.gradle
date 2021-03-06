@@ -7,8 +7,8 @@ android {
         applicationId "com.tobeforever.bookdownload"
         minSdkVersion 14
         targetSdkVersion 29
-        versionCode 29
-        versionName "2.9"
+        versionCode 30
+        versionName "3.0"
         resConfigs "zh"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -38,5 +38,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
-    testCompile 'junit:junit:4.12'
+    compile 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+//    testCompile 'junit:junit:4.12'
+    //fastjson
+//    compile group: 'org.ligboy.retrofit2', name: 'converter-fastjson-android', version: '2.1.0'
+
 }

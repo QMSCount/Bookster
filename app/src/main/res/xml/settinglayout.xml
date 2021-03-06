@@ -25,5 +25,11 @@
             android:defaultValue="true"
             android:key="棉花糖"
             android:title="棉花糖" />
+        <SwitchPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="true"
+            android:key="精校藏书"
+            android:title="精校藏书" />
     </PreferenceCategory>
 </PreferenceScreen>

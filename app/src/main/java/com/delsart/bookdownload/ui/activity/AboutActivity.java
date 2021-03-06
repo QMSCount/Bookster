@@ -255,6 +255,15 @@ public class AboutActivity extends MaterialAboutActivity {
                 true,
                 Uri.parse("http://www.mianhuatang520.com/")));
 
+        otherCardBuilder.addItem(ConvenienceBuilder.createWebsiteActionItem(c,
+                new IconicsDrawable(c)
+                        .icon(CommunityMaterial.Icon.cmd_earth)
+                        .color(ContextCompat.getColor(c, colorIcon))
+                        .sizeDp(18),
+                "精校藏书",
+                true,
+                Uri.parse("https://jingjiaocangshu.cn/")));
+
         return new MaterialAboutList(appCardBuilder.build(), authorCardBuilder.build(), convenienceCardBuilder.build(), otherCardBuilder.build());
     }
 

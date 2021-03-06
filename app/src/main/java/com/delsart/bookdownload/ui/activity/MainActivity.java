@@ -26,6 +26,7 @@ import com.delsart.bookdownload.R;
 import com.delsart.bookdownload.adapter.PagerAdapter;
 import com.delsart.bookdownload.ui.fragment.AiXiaFragment;
 import com.delsart.bookdownload.ui.fragment.BaseFragment;
+import com.delsart.bookdownload.ui.fragment.JingJiaoCangShuFragment;
 import com.delsart.bookdownload.ui.fragment.MianHuaTangFragment;
 import com.delsart.bookdownload.ui.fragment.ZhiXuanFragment1;
 import com.delsart.bookdownload.ui.fragment.ZhiXuanFragment2;
@@ -241,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
 //        addpage(new XiaoShuWuFragment(), "小书屋");
 //        addpage(new SanQiuShuWuFragment(), "三秋书屋");
         addpage(new MianHuaTangFragment(), "棉花糖");
+        addpage(new JingJiaoCangShuFragment(), "精校藏书");
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

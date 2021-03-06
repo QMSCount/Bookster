@@ -13,5 +13,5 @@ public interface Url {
     String SANQIU = "https://www.d4j.cn/?s=";
     String AIXIA = "https://m.ixdzs.com/search?k=";
     String MHT = "http://www.mianhuatang520.com/search.aspx?bookname=";
-
+    String JJCS = "https://jingjiaocangshu.cn/";
 }
