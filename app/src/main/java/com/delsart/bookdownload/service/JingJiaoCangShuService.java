@@ -59,7 +59,7 @@ public class JingJiaoCangShuService extends BaseService {
                     lasts = select.toString();
                     mPage++;
                     Message msg = mHandler.obtainMessage();
-                    msg.what = MsgType.SUCCESS;
+                    msg.what = MsgType.RESULT;
                     msg.obj = list;
                     mHandler.sendMessage(msg);
                 } catch (Exception e) {
